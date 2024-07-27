@@ -66,7 +66,7 @@ export default function Nav () {
         ?
         <div className="min-h-[320px] bg-black">
             <div className="h-[6px] bg-gradient-to-r from-yellow-500 via-blue-500 to-red-500"></div>
-            <ul className="flex flex-col gap-6 p-4 ">
+            <ul className=" flex-col lg:flex gap-6 p-4 ">
                 <li>
                     <Link
                     className={`${montserrat_thin_100.className} text-yellow-50 text-lg`}

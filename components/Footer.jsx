@@ -3,6 +3,7 @@ import {FaInstagram} from "react-icons/fa";
 import {FaXTwitter} from "react-icons/fa6";
 import {FaYoutube} from "react-icons/fa";
 import {FaDiscord} from "react-icons/fa";
+
 export default function Footer () {
     return (
         <footer className="flex flex-col gap-6 py-10 px-2 md:px-6 lg:px-12 bg-gray-600">
