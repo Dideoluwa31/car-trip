@@ -1,10 +1,13 @@
 "use client"
+import {usePathname } from "next/navigation"
 import Link from "next/link";
 import Image from "next/image";
 import {Montserrat} from "next/font/google";
 import {CiMenuBurger } from "react-icons/ci";
 import {IoCloseOutline} from "react-icons/io5";
 import { useState } from "react";
+import { GeneralNavBar } from "./nav_components/GeneralNavBar";
+import { DashboardNavBar } from "./nav_components/DashboardNavBar";
 
 const montserrat_thin_100 = Montserrat({
     subsets:["latin"],
@@ -13,6 +16,10 @@ const montserrat_thin_100 = Montserrat({
 
 export default function Nav () {
     const [menu, setMenu] = useState(false);
+    const path = usePathname();
+
+
+
 
     return (
         <>
@@ -25,28 +32,11 @@ export default function Nav () {
                 alt="brand logo"/>
             </div>
 
-            <ul className=" hidden lg:flex gap-8 ">
-                <li>
-                    <Link
-                    className={`${montserrat_thin_100.className} text-yellow-50 text-lg`}
-                    href="/">Home</Link>
-                </li>
-                <li>
-                    <Link
-                    className={`${montserrat_thin_100.className} text-yellow-50 text-lg`}
-                    href="#">About us</Link>
-                </li>
-                <li>
-                    <Link
-                    className={`${montserrat_thin_100.className} text-yellow-50 text-lg`}
-                    href="#">Contact us</Link>
-                </li>
-                <li>
-                    <Link
-                    className={`${montserrat_thin_100.className} text-yellow-50 text-lg`}
-                    href="#">Account</Link>
-                </li>
-            </ul>
+            {
+                path.split("/").includes("dashboard") 
+                ? <DashboardNavBar cssClass="flex-col lg:flex gap-6 p-4"/> 
+                : <GeneralNavBar cssClass=" hidden lg:flex gap-8"/>
+            }
 
             <blockquote className="lg:hidden">
                 {
@@ -66,28 +56,13 @@ export default function Nav () {
         ?
         <div className="min-h-[320px] bg-black">
             <div className="h-[6px] bg-gradient-to-r from-yellow-500 via-blue-500 to-red-500"></div>
-            <ul className=" flex-col lg:flex gap-6 p-4 ">
-                <li>
-                    <Link
-                    className={`${montserrat_thin_100.className} text-yellow-50 text-lg`}
-                    href="/">Home</Link>
-                </li>
-                <li>
-                    <Link
-                    className={`${montserrat_thin_100.className} text-yellow-50 text-lg`}
-                    href="#">About us</Link>
-                </li>
-                <li>
-                    <Link
-                    className={`${montserrat_thin_100.className} text-yellow-50 text-lg`}
-                    href="#">Contact us</Link>
-                </li>
-                <li>
-                    <Link
-                    className={`${montserrat_thin_100.className} text-yellow-50 text-lg`}
-                    href="#">Account</Link>
-                </li>
-            </ul>
+            
+            {
+                path.split("/").includes("dashboard") 
+                ? <DashboardNavBar cssClass="flex-col lg:flex gap-6 p-4"/> 
+                : <GeneralNavBar cssClass=" hidden lg:flex gap-8"/>
+            }
+            
         </div>
         : null
         }
