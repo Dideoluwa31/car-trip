@@ -5,7 +5,7 @@ import {VscActivateBreakpoints}from "react-icons/vsc";
 import {FaHistory,FaUserCircle,FaCreditCard} from "react-icons/fa";
 import { BookingCard } from "@/components/BookingCard";
 import { db } from "@/lib/firebase.config";
-import { getDocs,collection } from "firebase/firestore";
+import { onSnapshot,collection,where,orderBy,query } from "firebase/firestore";
 
 
 export default function Dashboard () {
@@ -16,16 +16,22 @@ export default function Dashboard () {
         const fetchBookings =async () => {
             const reDocs = [];
 
-            const q = collection(db,"bookings");
+            const q = query(
+                collection(db,"bookings"),
+                where("status", "==","active"),
+                orderBy("timecreated","desc")
+            );
 
-            const onSnap = await getDocs(q);
+            onSnapshot(q, querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    reDocs.push({
+                        id:doc.id,
+                        data:doc.data()
+                    })
+                });
+            })
 
-            onSnap.forEach(doc => {
-                reDocs.push({
-                    id:doc.id,
-                    data:doc.data()
-                })
-            });
+           
 
             setBookings(reDocs);
         }
@@ -72,6 +78,7 @@ export default function Dashboard () {
                     return (
                         <BookingCard
                         key={booking.id}
+                        docId={booking.id}
                         carId={booking.data.carId}
                         timestamp={booking.data.timecreated} />
                     )
